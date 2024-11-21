@@ -1,4 +1,5 @@
-﻿using HotelEstrellaDeMar.Models;
+﻿using HotelEstrellaDeMar.Data;
+using HotelEstrellaDeMar.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +7,47 @@ namespace HotelEstrellaDeMar.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        //Metodo para agregar datos a la base de datos para tener para testear
+        public IActionResult PreCargaDatos() 
+        {
+            if(_context.Reservas.Count() == 0 || _context.Usuarios.Count() == 0 || _context.Habitaciones.Count() == 0)
+            {
+                _context.Habitaciones.Add(new Habitacion(101, "Simple", 2));
+                _context.Habitaciones.Add(new Habitacion(102, "Simple", 2));
+                _context.Habitaciones.Add(new Habitacion(202, "Doble", 4));
+                _context.Habitaciones.Add(new Habitacion(203, "Doble", 4));
+                _context.Habitaciones.Add(new Habitacion(301, "Suite", 6));
+
+                _context.Usuarios.Add(new Usuario("Rodrigo", "Santana", "CI", 45268136, new DateTime(1987, 05, 01), 099679788, "asd@gmail.com", "123"));
+                _context.Usuarios.Add(new Usuario("Juan", "Perez", "CI", 45268139, new DateTime(1991, 08, 11), 099679844, "bebo@gmail.com", "456"));
+
+                _context.SaveChanges();
+
+                int usuarioId = _context.Usuarios.FirstOrDefault(usuario => usuario.Id == 1).Id; // Seleccionando el usuario con id = 1
+                int habitacionId = 101; // usando registros reales de la tabla habitaciones
+
+                _context.Reservas.Add(new Reserva(new DateTime(2025, 08, 11), new DateTime(2025, 08, 13), habitacionId, usuarioId));
+
+                int usuarioIdDos = _context.Usuarios.FirstOrDefault(usuario => usuario.Id == 2).Id; // Seleccionando el usuario con id = 1
+                int habitacionIdDos = 102; // usando registros reales de la tabla habitaciones
+
+                _context.Reservas.Add(new Reserva(new DateTime(2025, 01, 07), new DateTime(2025, 01, 09), habitacionId, usuarioId));
+
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

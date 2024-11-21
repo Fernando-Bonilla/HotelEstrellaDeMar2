@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelEstrellaDeMar.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241119030223_changedHabitacionesTableName")]
-    partial class changedHabitacionesTableName
+    [Migration("20241121034758_removedIdentityNumHab")]
+    partial class removedIdentityNumHab
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,16 +27,15 @@ namespace HotelEstrellaDeMar.Migrations
             modelBuilder.Entity("HotelEstrellaDeMar.Models.Habitacion", b =>
                 {
                     b.Property<int>("NumHabitacion")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NumHabitacion"), 1L, 1);
 
                     b.Property<int>("CapacidadHabitacion")
                         .HasColumnType("int");
 
                     b.Property<string>("TipoHabitacion")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("NumHabitacion");
 
@@ -84,19 +83,21 @@ namespace HotelEstrellaDeMar.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Apellido")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ConfirmPassword")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaNacimiento")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nombre")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("NumeroDocumento")
                         .HasColumnType("int");
@@ -108,6 +109,7 @@ namespace HotelEstrellaDeMar.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TipoDocumento")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

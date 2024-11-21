@@ -15,5 +15,16 @@ namespace HotelEstrellaDeMar.Data
         public DbSet<Habitacion> Habitaciones { get; set; }
         public DbSet<Reserva> Reservas { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Habitacion>()
+                .HasKey(h => h.NumHabitacion); 
+
+            modelBuilder.Entity<Habitacion>()
+                .HasMany(h => h.Reservas)
+                .WithOne(r => r.Habitacion)
+                .HasForeignKey(r => r.NumHabitacion);
+        }
+
     }
 }

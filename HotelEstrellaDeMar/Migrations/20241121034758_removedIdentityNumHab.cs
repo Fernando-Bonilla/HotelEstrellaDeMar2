@@ -5,22 +5,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HotelEstrellaDeMar.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class removedIdentityNumHab : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Habbitaciones",
+                name: "Habitaciones",
                 columns: table => new
                 {
-                    NumHabitacion = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TipoHabitacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumHabitacion = table.Column<int>(type: "int", nullable: false),
+                    TipoHabitacion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CapacidadHabitacion = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Habbitaciones", x => x.NumHabitacion);
+                    table.PrimaryKey("PK_Habitaciones", x => x.NumHabitacion);
                 });
 
             migrationBuilder.CreateTable(
@@ -29,15 +28,14 @@ namespace HotelEstrellaDeMar.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TipoDocumento = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    TipoDocumento = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumeroDocumento = table.Column<int>(type: "int", nullable: false),
                     FechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Telefono = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConfirmPassword = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -60,9 +58,9 @@ namespace HotelEstrellaDeMar.Migrations
                 {
                     table.PrimaryKey("PK_Reservas", x => x.IDReserva);
                     table.ForeignKey(
-                        name: "FK_Reservas_Habbitaciones_NumHabitacion",
+                        name: "FK_Reservas_Habitaciones_NumHabitacion",
                         column: x => x.NumHabitacion,
-                        principalTable: "Habbitaciones",
+                        principalTable: "Habitaciones",
                         principalColumn: "NumHabitacion",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -90,7 +88,7 @@ namespace HotelEstrellaDeMar.Migrations
                 name: "Reservas");
 
             migrationBuilder.DropTable(
-                name: "Habbitaciones");
+                name: "Habitaciones");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
