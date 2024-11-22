@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelEstrellaDeMar.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241121034758_removedIdentityNumHab")]
-    partial class removedIdentityNumHab
+    [Migration("20241122001130_initialDos")]
+    partial class initialDos
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,10 +26,16 @@ namespace HotelEstrellaDeMar.Migrations
 
             modelBuilder.Entity("HotelEstrellaDeMar.Models.Habitacion", b =>
                 {
-                    b.Property<int>("NumHabitacion")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<int>("CapacidadHabitacion")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumHabitacion")
                         .HasColumnType("int");
 
                     b.Property<string>("TipoHabitacion")
@@ -37,18 +43,18 @@ namespace HotelEstrellaDeMar.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("NumHabitacion");
+                    b.HasKey("Id");
 
                     b.ToTable("Habitaciones");
                 });
 
             modelBuilder.Entity("HotelEstrellaDeMar.Models.Reserva", b =>
                 {
-                    b.Property<long>("IDReserva")
+                    b.Property<int>("IDReserva")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("IDReserva"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDReserva"), 1L, 1);
 
                     b.Property<DateTime>("FechaCheckIn")
                         .HasColumnType("datetime2");
@@ -59,17 +65,17 @@ namespace HotelEstrellaDeMar.Migrations
                     b.Property<DateTime>("FechaReserva")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdUsuario")
+                    b.Property<int>("HabitacionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumHabitacion")
+                    b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
                     b.HasKey("IDReserva");
 
-                    b.HasIndex("IdUsuario");
+                    b.HasIndex("HabitacionId");
 
-                    b.HasIndex("NumHabitacion");
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("Reservas");
                 });
@@ -119,15 +125,15 @@ namespace HotelEstrellaDeMar.Migrations
 
             modelBuilder.Entity("HotelEstrellaDeMar.Models.Reserva", b =>
                 {
-                    b.HasOne("HotelEstrellaDeMar.Models.Usuario", "Usuario")
+                    b.HasOne("HotelEstrellaDeMar.Models.Habitacion", "Habitacion")
                         .WithMany("Reservas")
-                        .HasForeignKey("IdUsuario")
+                        .HasForeignKey("HabitacionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HotelEstrellaDeMar.Models.Habitacion", "Habitacion")
+                    b.HasOne("HotelEstrellaDeMar.Models.Usuario", "Usuario")
                         .WithMany("Reservas")
-                        .HasForeignKey("NumHabitacion")
+                        .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

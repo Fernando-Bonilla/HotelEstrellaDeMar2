@@ -8,7 +8,8 @@ namespace HotelEstrellaDeMar.Models
     {
         #region Propiedades
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public int NumHabitacion { get; set; }
         [Required]
         [StringLength(50, ErrorMessage = "El tipo de Habitacion no puede exceder los 50 caracteres")]

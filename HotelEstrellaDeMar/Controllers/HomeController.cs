@@ -35,20 +35,16 @@ namespace HotelEstrellaDeMar.Controllers
 
                 _context.SaveChanges();
 
-                int usuarioId = _context.Usuarios.FirstOrDefault().Id; // Seleccionando el usuario con id = 1
-                int habitacionId = 101; // usando registros reales de la tabla habitaciones
+                int HabitacionId = _context.Habitaciones.FirstOrDefault().Id;
+                int usuarioId = _context.Usuarios.FirstOrDefault().Id; // Seleccionando el usuario con id = 1           
+                _context.Reservas.Add(new Reserva(new DateTime(2025, 08, 11), new DateTime(2025, 08, 13), HabitacionId, usuarioId));
 
-                _context.Reservas.Add(new Reserva(new DateTime(2025, 08, 11), new DateTime(2025, 08, 13), habitacionId, usuarioId));
+                int HabitacionIdDos = _context.Habitaciones.Skip(1).FirstOrDefault().Id;
+                int usuarioIdDos = _context.Usuarios.Skip(1).FirstOrDefault().Id; // Seleccionando el usuario con id = 2                
+                _context.Reservas.Add(new Reserva(new DateTime(2025, 01, 07), new DateTime(2025, 01, 09), HabitacionIdDos, usuarioId));
 
-                int usuarioIdDos = _context.Usuarios.Skip(1).FirstOrDefault().Id; // Seleccionando el usuario con id = 2
-                int habitacionIdDos = 102; // usando registros reales de la tabla habitaciones
-
-                _context.Reservas.Add(new Reserva(new DateTime(2025, 01, 07), new DateTime(2025, 01, 09), habitacionId, usuarioId));
-
-                int usuarioIdTres = _context.Usuarios.Skip(1).FirstOrDefault().Id; // Seleccionando el usuario con id = 2
-                int habitacionIdTres = 202; // usando registros reales de la tabla habitaciones
-
-                _context.Reservas.Add(new Reserva(new DateTime(2025, 01, 07), new DateTime(2025, 01, 09), habitacionIdTres, usuarioIdTres));
+                /*int usuarioIdTres = _context.Usuarios.Skip(1).FirstOrDefault().Id; // Seleccionando el usuario con id = 2
+                _context.Reservas.Add(new Reserva(new DateTime(2025, 01, 07), new DateTime(2025, 01, 09), 202, usuarioIdTres));*/
 
                 _context.SaveChanges();
             }

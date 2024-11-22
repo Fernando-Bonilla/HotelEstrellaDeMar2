@@ -9,7 +9,10 @@ namespace HotelEstrellaDeMar.Models
         #region Propiedades
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public uint IDReserva { get; set; }
+        public int IDReserva { get; set; }
+
+      /*  [Required]
+        public int NumHabitacion { get; set; }*/
 
         [Required]
         [DataType(DataType.Date)]
@@ -26,7 +29,7 @@ namespace HotelEstrellaDeMar.Models
 
         //Relacion con la tabla Habitacion
         [ForeignKey("Habitacion")]
-        public int NumHabitacion {  get; set; }     
+        public int HabitacionId {  get; set; }     
         public Habitacion? Habitacion { get; set; }
 
         //Relacion con la tabla Usuario
@@ -39,11 +42,11 @@ namespace HotelEstrellaDeMar.Models
         {
             
         }
-        public Reserva(DateTime fechaCheckIn, DateTime fechaCheckOut, int numHab, int idUsuario)
+        public Reserva(DateTime fechaCheckIn, DateTime fechaCheckOut, int idHabitacion, int idUsuario)
         {
             FechaCheckIn = fechaCheckIn;
             FechaCheckOut = fechaCheckOut;
-            NumHabitacion = numHab;
+            HabitacionId = idHabitacion;
             IdUsuario = idUsuario;            
         }
         #endregion Constructores

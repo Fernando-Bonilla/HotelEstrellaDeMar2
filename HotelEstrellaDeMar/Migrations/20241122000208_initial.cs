@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HotelEstrellaDeMar.Migrations
 {
-    public partial class removedIdentityNumHab : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,13 +13,15 @@ namespace HotelEstrellaDeMar.Migrations
                 name: "Habitaciones",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     NumHabitacion = table.Column<int>(type: "int", nullable: false),
                     TipoHabitacion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CapacidadHabitacion = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Habitaciones", x => x.NumHabitacion);
+                    table.PrimaryKey("PK_Habitaciones", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,22 +48,23 @@ namespace HotelEstrellaDeMar.Migrations
                 name: "Reservas",
                 columns: table => new
                 {
-                    IDReserva = table.Column<long>(type: "bigint", nullable: false)
+                    IDReserva = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    NumHabitacion = table.Column<int>(type: "int", nullable: false),
                     FechaCheckIn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaCheckOut = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaReserva = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NumHabitacion = table.Column<int>(type: "int", nullable: false),
+                    HabitacionId = table.Column<int>(type: "int", nullable: false),
                     IdUsuario = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reservas", x => x.IDReserva);
                     table.ForeignKey(
-                        name: "FK_Reservas_Habitaciones_NumHabitacion",
-                        column: x => x.NumHabitacion,
+                        name: "FK_Reservas_Habitaciones_HabitacionId",
+                        column: x => x.HabitacionId,
                         principalTable: "Habitaciones",
-                        principalColumn: "NumHabitacion",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reservas_Usuarios_IdUsuario",
@@ -72,14 +75,14 @@ namespace HotelEstrellaDeMar.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reservas_HabitacionId",
+                table: "Reservas",
+                column: "HabitacionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reservas_IdUsuario",
                 table: "Reservas",
                 column: "IdUsuario");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reservas_NumHabitacion",
-                table: "Reservas",
-                column: "NumHabitacion");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
