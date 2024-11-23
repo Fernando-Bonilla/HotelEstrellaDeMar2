@@ -75,8 +75,18 @@ namespace HotelEstrellaDeMar.Controllers
                 Reserva newReserva = new Reserva(fechaCheckIn, fechaCheckOut, HabitacionesDisponibles[0].Id, idUsuario); //Recordar pasarle el id por usuario                                                                                                                 
                 _context.Reservas.Add(newReserva);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
-            }else
+                //return RedirectToAction("Index");
+
+                Reserva? reservita = _context.Reservas
+                    .Include(reserva => reserva.Habitacion)
+                    .Include(reserva => reserva.Usuario)
+                    .FirstOrDefault(reserva => reserva.IDReserva == newReserva.IDReserva);
+
+
+                ViewBag.Reserva = reservita;                
+                return View("ReservaCreadaOModificadaExitosa");
+            }
+            else
             {
                 ViewBag.Message = "No hay habitaciones disponibles para el rango de fechas";
                 return View(ListarReservas(idUsuario));
@@ -150,23 +160,6 @@ namespace HotelEstrellaDeMar.Controllers
             ViewBag.Reserva = reserva;
             return View("ReservaCreadaOModificadaExitosa");
         }
-
-
-       /* public IActionResult ReservaCreadaOModificadaExitosa(int idReserva)
-        {
-            Reserva reserva = _context.Reservas
-                .Include(reserva => reserva.Habitacion)
-                .FirstOrDefault(reserva => reserva.IDReserva == idReserva);
-
-            if (reserva == null)
-
-            {
-                return NotFound();
-            }
-
-            ViewBag.Reserva = reserva;
-            return View();
-        }*/
 
     }
 }
