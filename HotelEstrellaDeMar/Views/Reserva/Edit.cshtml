@@ -1,28 +1,30 @@
-﻿
-<h2>Editar Reserva</h2>
-
-<div>
+﻿<div class="container mt-5">
+    <h2 class="mb-4">Editar Reserva</h2>
     <form asp-action="EditarReserva" method="post">
-        <div>
-            <input type="hidden" name="idReserva" value="@ViewBag.Reserva.IDReserva" />
-            <label>Ingrese una nueva fecha de CheckIn</label>
-            <input type="date" name="fechaCheckIn" required value="@ViewBag.Reserva.FechaCheckIn.ToString("yyyy-MM-dd")" />            
+        <input type="hidden" name="idReserva" value="@ViewBag.Reserva.IDReserva" />
 
-            <label>Ingrese una nueva fecha de CheckOut</label>
-            <input type="date" name="fechaCheckOut" required value="@ViewBag.Reserva.FechaCheckOut.ToString("yyyy-MM-dd")" />
+        <div class="mb-3">
+            <label for="fechaCheckIn" class="form-label">Ingrese una nueva fecha de CheckIn</label>
+            <input type="date" class="form-control" name="fechaCheckIn" id="fechaCheckIn" required value="@ViewBag.Reserva.FechaCheckIn.ToString("yyyy-MM-dd")" />
         </div>
-        <div>
-            <label>Seleccione un tipo de Habitacion</label>            
-            <select name="tipoHab" required">
-                <option value="">--Por favor seleccione una opcion--</option>
+
+        <div class="mb-3">
+            <label for="fechaCheckOut" class="form-label">Ingrese una nueva fecha de CheckOut</label>
+            <input type="date" class="form-control" name="fechaCheckOut" id="fechaCheckOut" required value="@ViewBag.Reserva.FechaCheckOut.ToString("yyyy-MM-dd")" />
+        </div>
+
+        <div class="mb-3">
+            <label for="tipoHab" class="form-label">Seleccione un tipo de Habitacion</label>
+            <select class="form-select" name="tipoHab" id="tipoHab" required>
+                <option value="">--Por favor seleccione una opción--</option>
                 <option value="Simple">Simple</option>
                 <option value="Doble">Doble</option>
                 <option value="Suite">Suite</option>
             </select>
-        </div>        
+        </div>
+
         <div>
-            <input type="submit" value="Modificar Reserva">
+            <input type="submit" class="btn btn-primary" value="Modificar Reserva">
         </div>
     </form>
-
 </div>
