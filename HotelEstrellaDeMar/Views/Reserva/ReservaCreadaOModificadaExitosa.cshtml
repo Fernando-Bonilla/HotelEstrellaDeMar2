@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h2> Reserva Creada/Modificada Exitosamente</h2>
+
+<table class="table table-striped">
+    <theadclass ="thead-dark">
+        <tr>
+            <th>N° Reserva</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>N° Habitacion</th>
+            <th>Tipo Habitacion</th>
+            <th>Fecha Check In</th>
+            <th>Fecha Check Out</th>            
+        </tr>
+    </theadclass>
+    <tbody>
+        <tr>
+            <td>@ViewBag.Reserva.IDReserva</td>
+            <td>@ViewBag.Reserva.Usuario.Nombre</td>
+            <td>@ViewBag.Reserva.Usuario.Apellido</td>
+            <td>@ViewBag.Reserva.Habitacion.NumHabitacion</td>
+            <td>@ViewBag.Reserva.Habitacion.TipoHabitacion</td>
+            <td>@ViewBag.Reserva.FechaCheckIn</td>
+            <td>@ViewBag.Reserva.FechaCheckOut</td>
+        </tr>
+    </tbody>
+</table>
+
