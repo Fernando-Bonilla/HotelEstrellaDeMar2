@@ -35,5 +35,23 @@ namespace HotelEstrellaDeMar.Models
             CapacidadHabitacion = capacidad;
         }
         #endregion Constructores
+
+        #region Metodos
+        public bool EstaDisponible(DateTime fechaCheckIn, DateTime fechaCheckOut)
+        {
+
+            foreach (Reserva reserva in Reservas)
+            {
+
+                if (fechaCheckIn >= reserva.FechaCheckIn && fechaCheckIn <= reserva.FechaCheckOut 
+                    || fechaCheckOut <= reserva.FechaCheckOut && fechaCheckOut >= reserva.FechaCheckIn 
+                    || fechaCheckIn <= reserva.FechaCheckOut && fechaCheckOut >= reserva.FechaCheckIn)                    
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        #endregion Metodos
     }
 }

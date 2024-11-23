@@ -20,14 +20,18 @@ namespace HotelEstrellaDeMar.Controllers
         }
 
         //Metodo para agregar datos a la base de datos para tener para testear
-        public IActionResult PreCargaDatos() 
+        public IActionResult PreCargaDatos(string? force) 
         {
-            if(_context.Reservas.Count() == 0 || _context.Usuarios.Count() == 0 || _context.Habitaciones.Count() == 0)
+            if((_context.Reservas.Count() == 0 || _context.Usuarios.Count() == 0 || _context.Habitaciones.Count() == 0) || force == "true")
             {
                 _context.Habitaciones.Add(new Habitacion(101, "Simple", 2));
                 _context.Habitaciones.Add(new Habitacion(102, "Simple", 2));
                 _context.Habitaciones.Add(new Habitacion(202, "Doble", 4));
                 _context.Habitaciones.Add(new Habitacion(203, "Doble", 4));
+                _context.Habitaciones.Add(new Habitacion(204, "Doble", 4));
+                _context.Habitaciones.Add(new Habitacion(205, "Doble", 4));
+                _context.Habitaciones.Add(new Habitacion(206, "Doble", 4));
+                _context.Habitaciones.Add(new Habitacion(207, "Doble", 4));
                 _context.Habitaciones.Add(new Habitacion(301, "Suite", 6));
 
                 _context.Usuarios.Add(new Usuario("Rodrigo", "Santana", "CI", 45268136, new DateTime(1987, 05, 01), 099679788, "asd@gmail.com", "123"));
@@ -42,6 +46,10 @@ namespace HotelEstrellaDeMar.Controllers
                 int HabitacionIdDos = _context.Habitaciones.Skip(1).FirstOrDefault().Id;
                 int usuarioIdDos = _context.Usuarios.Skip(1).FirstOrDefault().Id; // Seleccionando el usuario con id = 2                
                 _context.Reservas.Add(new Reserva(new DateTime(2025, 01, 07), new DateTime(2025, 01, 09), HabitacionIdDos, usuarioId));
+
+                int HabitacionIdTres = _context.Habitaciones.Skip(1).FirstOrDefault().Id;
+                int usuarioIdTres = _context.Usuarios.Skip(1).FirstOrDefault().Id; // Seleccionando el usuario con id = 2                
+                _context.Reservas.Add(new Reserva(new DateTime(2025, 08, 01), new DateTime(2025, 08, 09), HabitacionIdTres, usuarioIdTres));
 
                 /*int usuarioIdTres = _context.Usuarios.Skip(1).FirstOrDefault().Id; // Seleccionando el usuario con id = 2
                 _context.Reservas.Add(new Reserva(new DateTime(2025, 01, 07), new DateTime(2025, 01, 09), 202, usuarioIdTres));*/

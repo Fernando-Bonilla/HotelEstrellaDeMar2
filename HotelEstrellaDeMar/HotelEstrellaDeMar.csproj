@@ -17,8 +17,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Views\Habitaciones\" />
-    <Folder Include="Views\Reservas\" />
   </ItemGroup>
 
 </Project>

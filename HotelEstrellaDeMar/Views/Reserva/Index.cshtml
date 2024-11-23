@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h2>Reservas</h2>
+
+<a asp-controller="Reserva" asp-action="Create" class="btn btn-primary">Crear Reserva</a>
+
+@if (ViewBag.Reservas != null && ViewBag.Reservas.Count > 0)
+{
+    <h2>Reservas Activas</h2>
+    <table class="table table-striped">        
+        <theadclass ="thead-dark">
+            <tr>
+                <th>N° Reserva</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>N° Habitacion</th>
+                <th>Tipo Habitacion</th>
+                <th>Fecha Check In</th>
+                <th>Fecha Check Out</th>
+                <th>Acciones</th>
+            </tr>
+        </theadclass>
+        <tbody>        
+            @foreach (Reserva reserva in ViewBag.Reservas)
+            {
+                <tr>
+                    <td>@reserva.IDReserva</td>
+                    <td>@reserva.Usuario.Nombre</td>
+                    <td>@reserva.Usuario.Apellido</td>
+                    <td>@reserva.Habitacion.NumHabitacion</td>
+                    <td>@reserva.Habitacion.TipoHabitacion</td>
+                    <td>@reserva.FechaCheckIn</td>
+                    <td>@reserva.FechaCheckOut</td>                    
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@reserva.IDReserva" class="btn btn-primary" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@reserva.IDReserva" class="btn btn-danger" title="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>                    
+                </tr>
+            }
+        </tbody> 
+    </table>
+}else
+{
+    <p>No tienes reservas generadas</p>
+}

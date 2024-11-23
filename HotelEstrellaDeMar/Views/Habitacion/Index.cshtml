@@ -1,0 +1,54 @@
+﻿
+<h1>Listar habitaciones disponibles</h1>
+
+<div>
+    <form asp-action="MostrarHabDisponibles" method="post">
+        <div>
+            <label>Ingrese una fecha de CheckIn</label>
+            <input type="date" name="fechaCheckIn" required/>
+
+            <label>Ingrese una fecha de CheckOut</label>
+            <input type="date" name="fechaCheckOut" required />
+        </div>
+        <div>
+            <label>Seleccione un tipo de Habitacion</label>
+            <select name="tipoHab" required>
+                <option value="">--Por favor seleccione una opcion--</option>
+                <option value="Simple">Simple</option>
+                <option value="Doble">Doble</option>
+                <option value="Suite">Suite</option>
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="Consultar">
+        </div>
+    </form>
+
+</div>
+
+
+@if (ViewBag.HabitacionesDisponibles.Count != 0) {
+
+    <table>
+        <thead>
+            <tr>
+                <th>N° Habitacion</th>
+                <th>Tipo Habitacion</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @foreach (Habitacion habitacion in ViewBag.HabitacionesDisponibles)
+            {
+                <tr>
+                    <td>@habitacion.NumHabitacion</td>
+                    <td>@habitacion.TipoHabitacion</td>
+                </tr>
+            }                                         
+                      
+            
+        </tbody>
+    </table>
+}
+
