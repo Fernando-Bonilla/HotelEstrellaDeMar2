@@ -11,7 +11,6 @@
         <a asp-controller="Reserva" asp-action="Create" class="btn btn-primary">Crear Reserva</a>
     </div>
 
-
     @if (ViewBag.Reservas != null && ViewBag.Reservas.Count > 0)
     {
         <div class="container mt-5">
@@ -55,6 +54,8 @@
         </div>
     }else
     {
-        <p>No tienes reservas generadas</p>
+        <div class="container mt-5">
+            <p>No tienes reservas generadas</p>
+        </div>
     }
 </div>

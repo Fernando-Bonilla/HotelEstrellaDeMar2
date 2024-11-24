@@ -1,41 +1,48 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<div class="container mt-5">
+    <h2 class="mb-4">Crear Reserva</h2>
 
-<h2>Crear Reserva</h2>
-
-<div>
     <form asp-action="CrearReserva" method="post">
-        <div>
-            <label>Ingrese una fecha de CheckIn</label>
-            <input type="date" name="fechaCheckIn" required />
-
-            <label>Ingrese una fecha de CheckOut</label>
-            <input type="date" name="fechaCheckOut" required />
+        <div class="mb-3">
+            <label for="fechaCheckIn" class="form-label">Ingrese una fecha de CheckIn</label>
+            <input type="date" class="form-control" name="fechaCheckIn" id="fechaCheckIn" required />
         </div>
-        <div>
-            <label>Seleccione un tipo de Habitacion</label>
-            <select name="tipoHab" required>
+
+        <div class="mb-3">
+            <label for="fechaCheckOut" class="form-label">Ingrese una fecha de CheckOut</label>
+            <input type="date" class="form-control" name="fechaCheckOut" id="fechaCheckOut" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="tipoHab" class="form-label">Seleccione un tipo de Habitacion</label>
+            <select class="form-select" name="tipoHab" id="tipoHab" required>
                 <option value="">--Por favor seleccione una opcion--</option>
                 <option value="Simple">Simple</option>
                 <option value="Doble">Doble</option>
                 <option value="Suite">Suite</option>
             </select>
         </div>
-        <div>
-            <label>Seleccione el Usuario</label>
-            <select name="idUsuario" required>
+
+        <div class="mb-3">
+            <label for="idUsuario" class="form-label">Seleccione el Usuario</label>
+            <select class="form-select" name="idUsuario" id="idUsuario" required>
                 <option value="">--Por favor seleccione un usuario--</option>
-                <option value="1">Rodrigo Santana</option>
-                <option value="2">Juan Perez</option>
-                
+                @foreach(var user in ViewBag.Usuarios)
+                {
+                    <option value="@user.Id">@user.Nombre @user.Apellido </option>
+                }
             </select>
         </div>
-        <div>
-            <input type="submit" value="Crear Reserva">
+
+        <div class="mb-3">
+            <input type="submit" class="btn btn-primary" value="Crear Reserva">
         </div>
     </form>
 
+    @if(TempData["Error"] != null) 
+    {
+        <div>
+            <p>@TempData["Error"].ToString()</p>
+        </div>
+
+    }
 </div>

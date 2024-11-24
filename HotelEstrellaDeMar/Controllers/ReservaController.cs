@@ -19,11 +19,12 @@ namespace HotelEstrellaDeMar.Controllers
         public IActionResult Index()
         {
             //List<Reserva> Reservas = new List<Reserva>();
-            return View(ListarReservas(2));
+            return View(ListarReservas(6)); //** recordar pasarle id por lo que venga de la web, por ahora lo estoy pasando a mano desde el metodo Index de acá
         }
 
         public IActionResult Create()
         {
+            ViewBag.Usuarios = _context.Usuarios;
             return View();
         }
 
@@ -48,7 +49,7 @@ namespace HotelEstrellaDeMar.Controllers
             return View();
         }
 
-        public IActionResult CrearReserva(DateTime fechaCheckIn, DateTime fechaCheckOut, string tipoHab, int idUsuario)/*int idUsuario*/
+        public IActionResult CrearReserva(DateTime fechaCheckIn, DateTime fechaCheckOut, string tipoHab, int idUsuario)
         {
             List<Reserva> Reservas = new List<Reserva>();
             List<Habitacion> HabitacionesPorTipo = _context.Habitaciones
@@ -72,7 +73,7 @@ namespace HotelEstrellaDeMar.Controllers
 
             if(HabitacionesDisponibles.Count > 0)
             {
-                Reserva newReserva = new Reserva(fechaCheckIn, fechaCheckOut, HabitacionesDisponibles[0].Id, idUsuario); //Recordar pasarle el id por usuario                                                                                                                 
+                Reserva newReserva = new Reserva(fechaCheckIn, fechaCheckOut, HabitacionesDisponibles[0].Id, idUsuario);                                                                                                               
                 _context.Reservas.Add(newReserva);
                 _context.SaveChanges();
                 //return RedirectToAction("Index");
@@ -88,8 +89,10 @@ namespace HotelEstrellaDeMar.Controllers
             }
             else
             {
-                ViewBag.Message = "No hay habitaciones disponibles para el rango de fechas";
-                return View(ListarReservas(idUsuario));
+                TempData["Error"] = $"No hay habitaciones del tipo {tipoHab} disponibles para el rango de fechas seleccionado"; // Usando metodo TempData me permite mantener esta info por mas que se recargue la view
+                //ViewBag.Error = TempData["Error"];
+                //return View(ListarReservas(idUsuario));
+                return RedirectToAction("Create");
             }       
             
         }
@@ -100,7 +103,7 @@ namespace HotelEstrellaDeMar.Controllers
                 .Where(reserva => reserva.IdUsuario == idUsuario && reserva.FechaCheckIn > DateTime.Today)
                 .Include(reserva => reserva.Habitacion)
                 .Include(reserva => reserva.Usuario)
-                .ToList(); // recordar pasarle id por lo que venga de la web, por ahora lo estoy pasando a mano desde el metodo Index de acá
+                .ToList(); 
 
             ViewBag.Reservas = Reservas;
             return View("Index");
@@ -148,7 +151,7 @@ namespace HotelEstrellaDeMar.Controllers
             {
                 Console.WriteLine("Entra a HabitacionesDisponibles == 0");
                 ViewBag.Message = "No hay habitaciones disponibles para el rango de fechas";
-                return View(ListarReservas(2)); // recordar pasarle id por lo que venga de la web, por ahora lo estoy pasando a mano desde el metodo Index de acá 
+                return View(ListarReservas(6)); //** recordar pasarle id por lo que venga de la web, por ahora lo estoy pasando a mano desde el metodo Index de acá 
             }
 
             reserva.FechaCheckIn = fechaCheckIn;

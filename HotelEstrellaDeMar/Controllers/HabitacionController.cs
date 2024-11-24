@@ -62,7 +62,17 @@ namespace HotelEstrellaDeMar.Controllers
 
             //Console.WriteLine(HabitacionesDisponibles.Count());
 
-            ViewBag.HabitacionesDisponibles = HabitacionesDisponibles;
+            if(HabitacionesDisponibles.Count > 0)
+            {
+                ViewBag.HabitacionesDisponibles = HabitacionesDisponibles;                
+
+            }else
+            {
+                ViewBag.Error = $"No hay habitaciones del tipo {tipoHab} para las fechas seleccionadas";               
+
+            }
+
+            /*ViewBag.HabitacionesDisponibles = HabitacionesDisponibles;*/
             
             return View("Index");
 
