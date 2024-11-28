@@ -44,10 +44,10 @@ namespace HotelEstrellaDeMar.Controllers
             return View();
         }
 
-        public IActionResult Remove()
+/*        public IActionResult Remove()
         {
             return View();
-        }
+        }*/
 
         public IActionResult CrearReserva(DateTime fechaCheckIn, DateTime fechaCheckOut, string tipoHab, int idUsuario)
         {
@@ -164,5 +164,29 @@ namespace HotelEstrellaDeMar.Controllers
             return View("ReservaCreadaOModificadaExitosa");
         }
 
+        public IActionResult EliminarReserva(int id)
+        {
+            Console.WriteLine("id Reserva: " + id);
+            Reserva reserva = _context.Reservas
+                .Include(reserva => reserva.Usuario)
+                .Include(reserva => reserva.Habitacion)
+                .FirstOrDefault(reserva => reserva.IDReserva == id);
+
+            if (reserva == null) 
+            {
+                Console.WriteLine("la reserva es null gil");  
+            }
+
+            if (reserva != null)
+            {
+                ViewBag.Reserva = reserva;
+
+                _context.Reservas.Remove(reserva);
+                _context.SaveChanges();
+            }
+
+            
+            return View("BorradoExitoso");
+        }
     }
 }

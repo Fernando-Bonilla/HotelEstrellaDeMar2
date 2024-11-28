@@ -43,9 +43,10 @@
                                 <a asp-action="Edit" asp-route-id="@reserva.IDReserva" class="btn btn-primary" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a asp-action="Delete" asp-route-id="@reserva.IDReserva" class="btn btn-danger" title="Delete">
+                                <a asp-action="EliminarReserva" asp-route-id="@reserva.IDReserva" class="btn btn-danger" title="Delete"
+                                   onclick="return confirm('¿Estás seguro de que deseas borrar esta reserva?');">
                                     <i class="fas fa-trash-alt"></i>
-                                </a>
+                                </a>                                
                             </td>                    
                         </tr>
                     }
