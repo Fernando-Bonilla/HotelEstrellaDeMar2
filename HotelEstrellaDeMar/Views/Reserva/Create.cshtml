@@ -4,12 +4,12 @@
     <form asp-action="CrearReserva" method="post">
         <div class="mb-3">
             <label for="fechaCheckIn" class="form-label">Ingrese una fecha de CheckIn</label>
-            <input type="date" class="form-control" name="fechaCheckIn" id="fechaCheckIn" required />
+            <input type="date" class="form-control" name="fechaCheckIn" id="fechaCheckIn" required min="@ViewBag.Hoy"/>
         </div>
 
         <div class="mb-3">
             <label for="fechaCheckOut" class="form-label">Ingrese una fecha de CheckOut</label>
-            <input type="date" class="form-control" name="fechaCheckOut" id="fechaCheckOut" required />
+            <input type="date" class="form-control" name="fechaCheckOut" id="fechaCheckOut" required min="@ViewBag.Manana"/>
         </div>
 
         <div class="mb-3">
@@ -35,13 +35,36 @@
 
         <div class="mb-3">
             <input type="submit" class="btn btn-primary" value="Crear Reserva">
+            <a asp-action="Index" class="btn btn-outline-secondary" title="Regresar al listado">
+                <i class="fas fa-arrow-left"></i> Regresar al Listado
+            </a>
         </div>
+        
     </form>
 
+    @* Mensaje que se muestra si no hay unidades de ese tipo disponibles en ese rango de fecha *@
     @if(TempData["Error"] != null) 
     {
         <div>
             <p>@TempData["Error"].ToString()</p>
+        </div>
+
+    }
+
+    @* Mensaje que se muestra si la fecha Check Out es menor a fecha Check In *@
+    @if (TempData["ErrorFecha"] != null)
+    {
+        <div>
+            <p>@TempData["ErrorFecha"].ToString()</p>
+        </div>
+
+    }
+
+    @* Mensaje que se muestra si la reserva supera los 30 dias *@
+    @if (TempData["ErrorDuracion"] != null)
+    {
+        <div>
+            <p>@TempData["ErrorDuracion"].ToString()</p>
         </div>
 
     }
