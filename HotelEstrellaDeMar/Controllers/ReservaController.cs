@@ -16,10 +16,11 @@ namespace HotelEstrellaDeMar.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
             //List<Reserva> Reservas = new List<Reserva>();
-            return View(ListarReservas(5)); //** recordar pasarle id por lo que venga de la web, por ahora lo estoy pasando a mano desde el metodo Index de acá
+            ViewBag.IdUsuario = id;
+            return View(ListarReservas(id)); //** recordar pasarle id por lo que venga de la web, por ahora lo estoy pasando a mano desde el metodo Index de acá
         }
 
         public IActionResult Create()

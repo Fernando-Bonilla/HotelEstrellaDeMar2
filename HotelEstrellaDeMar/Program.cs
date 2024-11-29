@@ -26,8 +26,12 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+/*app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");*/
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Index}/{id?}"); // La app inicia en LoginController, acción Index
 
 app.Run();
