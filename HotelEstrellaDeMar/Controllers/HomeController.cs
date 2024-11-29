@@ -40,6 +40,7 @@ namespace HotelEstrellaDeMar.Controllers
                 _context.SaveChanges();
 
                 int HabitacionId = _context.Habitaciones.FirstOrDefault().Id;
+                //int usuarioId = 1;
                 int usuarioId = _context.Usuarios.FirstOrDefault().Id; // Seleccionando el usuario con id = 1           
                 _context.Reservas.Add(new Reserva(new DateTime(2025, 08, 11), new DateTime(2025, 08, 13), HabitacionId, usuarioId));
 
