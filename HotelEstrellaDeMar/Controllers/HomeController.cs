@@ -21,7 +21,7 @@ namespace HotelEstrellaDeMar.Controllers
         }
 
         //Metodo para agregar datos a la base de datos para tener para testear
-        public IActionResult PreCargaDatos(string? force) 
+        /*public IActionResult PreCargaDatos(string? force) 
         {
             if((_context.Reservas.Count() == 0 || _context.Usuarios.Count() == 0 || _context.Habitaciones.Count() == 0) || force == "true")
             {
@@ -53,13 +53,13 @@ namespace HotelEstrellaDeMar.Controllers
                 int usuarioIdTres = _context.Usuarios.Skip(1).FirstOrDefault().Id; // Seleccionando el usuario con id = 2                
                 _context.Reservas.Add(new Reserva(new DateTime(2025, 08, 01), new DateTime(2025, 08, 09), HabitacionIdTres, usuarioIdTres));
 
-                /*int usuarioIdTres = _context.Usuarios.Skip(1).FirstOrDefault().Id; // Seleccionando el usuario con id = 2
-                _context.Reservas.Add(new Reserva(new DateTime(2025, 01, 07), new DateTime(2025, 01, 09), 202, usuarioIdTres));*/
+                *//*int usuarioIdTres = _context.Usuarios.Skip(1).FirstOrDefault().Id; // Seleccionando el usuario con id = 2
+                _context.Reservas.Add(new Reserva(new DateTime(2025, 01, 07), new DateTime(2025, 01, 09), 202, usuarioIdTres));*//*
 
                 _context.SaveChanges();
             }
             return RedirectToAction("Index");
-        }
+        }*/
 
        /* public IActionResult Privacy()
         {
