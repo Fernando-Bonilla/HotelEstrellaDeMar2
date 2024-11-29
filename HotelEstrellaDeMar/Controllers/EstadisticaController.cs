@@ -14,8 +14,9 @@ namespace HotelEstrellaDeMar.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
+            ViewBag.IdUsuario = id;
             ViewBag.Historial = HistorialReservasPorTipoHabitacion();
             return View();
         }

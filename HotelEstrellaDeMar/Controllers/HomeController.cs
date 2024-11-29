@@ -14,8 +14,9 @@ namespace HotelEstrellaDeMar.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
+            ViewBag.IdUsuario = id; // Pasar el ID del usuario al ViewBag
             return View();
         }
 

@@ -1,8 +1,8 @@
 ﻿<div class="container mt-5">
     <h2 class="mb-4">Editar Reserva</h2>
-    <form asp-action="EditarReserva" method="post">
+    <form asp-action="EditarReserva" @* asp-route-id="@ViewBag.IdUsuario" *@ method="post">
         <input type="hidden" name="idReserva" value="@ViewBag.Reserva.IDReserva" />
-
+        <input type="hidden" name="idUsuario" value="@ViewBag.IdUsuario" />
         <div class="mb-3">
             <label for="fechaCheckIn" class="form-label">Ingrese una nueva fecha de CheckIn</label>
             <input type="date" class="form-control" name="fechaCheckIn" id="fechaCheckIn" required value="@ViewBag.Reserva.FechaCheckIn.ToString("yyyy-MM-dd")" />
@@ -22,10 +22,11 @@
                 <option value="Suite">Suite</option>
             </select>
         </div>
+        <p>ID Usuario: @ViewBag.IdUsuario</p>
 
         <div>
             <input type="submit" class="btn btn-primary" value="Modificar Reserva">
-            <a asp-action="Index" class="btn btn-outline-secondary" title="Regresar al listado">
+            <a asp-action="Index" class="btn btn-outline-secondary" asp-route-id="@ViewBag.IdUsuario" title="Regresar al listado">
                 <i class="fas fa-arrow-left"></i> Regresar al Listado
             </a>
         </div>

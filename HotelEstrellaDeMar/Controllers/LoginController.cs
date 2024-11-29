@@ -25,11 +25,13 @@ namespace HotelEstrellaDeMar.Controllers
         {
             // Buscar el usuario en la base de datos
             Usuario? usuario = _context.Usuarios.FirstOrDefault(usuario => usuario.Email == email && usuario.Password == password);
+            //Console.WriteLine("Id en el index de login controller" + usuario.Id);
 
             if (usuario != null)
             {
                 // Redirigir al listado de reservas después del login exitoso
-                return RedirectToAction("Index", "Reserva", new { userId = usuario.Id });
+                Console.WriteLine(ViewBag.IdUsuario = usuario.Id);
+                return RedirectToAction("Index", "Home", new { id = usuario.Id });
             }
 
             // Si las credenciales son incorrectas

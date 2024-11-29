@@ -18,20 +18,31 @@ namespace HotelEstrellaDeMar.Controllers
 
         public IActionResult Index(int id)
         {
+            if (id == null || id == 0)
+            {
+                // Redirigir al login si no se pasa el ID
+                return RedirectToAction("Index", "Login");
+            }
             //List<Reserva> Reservas = new List<Reserva>();
+            //Usuario ?usuario = _context.Usuarios.FirstOrDefault(usuario => usuario.Email == email);
+
+            // Guardar el ID en el ViewBag y listar las reservas
             ViewBag.IdUsuario = id;
-            return View(ListarReservas(id)); //** recordar pasarle id por lo que venga de la web, por ahora lo estoy pasando a mano desde el metodo Index de acá
+            return View(ListarReservas(id));            
         }
 
-        public IActionResult Create()
-        {
+        public IActionResult Create(int id)
+        {            
+
+            ViewBag.IdUsuario = id;
+            Console.WriteLine("id en create" + id);
             ViewBag.Usuarios = _context.Usuarios;
             ViewBag.Hoy = DateTime.Today.ToString("yyyy-MM-dd"); // Tambien le paso el valor de la fecha de hoy para setearle como min al input CheckIn
             ViewBag.Manana = DateTime.Today.AddDays(1).ToString("yyyy-MM-dd"); // Lo mismo para la fecha de CheckOut
             return View();
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id, int idUsuario)
         {
             Reserva reserva = _context.Reservas                
                 .Include(reserva => reserva.Habitacion)
@@ -43,7 +54,8 @@ namespace HotelEstrellaDeMar.Controllers
             }
 
             Console.WriteLine("Edit metodo Holaa");            
-            ViewBag.Reserva = reserva;  
+            ViewBag.Reserva = reserva;
+            ViewBag.IdUsuario = idUsuario;
             return View();
         }
 
@@ -54,15 +66,17 @@ namespace HotelEstrellaDeMar.Controllers
 
         public IActionResult CrearReserva(DateTime fechaCheckIn, DateTime fechaCheckOut, string tipoHab, int idUsuario)
         {
-            if(fechaCheckOut < fechaCheckIn)
+            Console.WriteLine($"idUsuario recibido: {idUsuario}");
+
+            if (fechaCheckOut < fechaCheckIn)
             {
                 TempData["ErrorFecha"] = "La fecha de Check Out debe ser posterior a la fecha de Check In";
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { id = idUsuario });
             }
             if ((fechaCheckOut - fechaCheckIn).TotalDays > 30)
             {
                 TempData["ErrorDuracion"] = "La reserva no puede ser mayor a 30 dias";
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { id = idUsuario });
             }
 
 
@@ -99,15 +113,16 @@ namespace HotelEstrellaDeMar.Controllers
                     .FirstOrDefault(reserva => reserva.IDReserva == newReserva.IDReserva);
 
 
-                ViewBag.Reserva = reserva;                
-                return View("ReservaCreadaOModificadaExitosa");
+                ViewBag.Reserva = reserva;
+                ViewBag.IdUsuario = idUsuario;
+                return View("ReservaCreadaOModificadaExitosa", new { id = idUsuario });
             }
             else
             {
                 TempData["Error"] = $"No hay habitaciones del tipo {tipoHab} disponibles para el rango de fechas seleccionado"; // Usando metodo TempData me permite mantener esta info por mas que se recargue la view
                 //ViewBag.Error = TempData["Error"];
                 //return View(ListarReservas(idUsuario));
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { id = idUsuario });
             }       
             
         }
@@ -121,11 +136,12 @@ namespace HotelEstrellaDeMar.Controllers
                 .ToList(); 
 
             ViewBag.Reservas = Reservas;
-            return View("Index");
+            return View("Index", new { id = idUsuario });
         }
 
-        public IActionResult EditarReserva(int idReserva, DateTime fechaCheckIn, DateTime fechaCheckOut, string tipoHab)
+        public IActionResult EditarReserva(int idReserva, DateTime fechaCheckIn, DateTime fechaCheckOut, string tipoHab, int idUsuario)
         {
+            Console.WriteLine($"ID Usuario recibido en EditarReserva: {idUsuario}");
             Console.WriteLine(tipoHab);
             Console.WriteLine(idReserva);
             Reserva reserva = _context.Reservas
@@ -166,7 +182,8 @@ namespace HotelEstrellaDeMar.Controllers
             {
                 Console.WriteLine("Entra a HabitacionesDisponibles == 0");
                 ViewBag.Message = "No hay habitaciones disponibles para el rango de fechas";
-                return View(ListarReservas(5)); //** recordar pasarle id por lo que venga de la web, por ahora lo estoy pasando a mano desde el metodo Index de acá 
+                ViewBag.IdUsuario = idUsuario;
+                return View(ListarReservas(idUsuario)); //** recordar pasarle id por lo que venga de la web, por ahora lo estoy pasando a mano desde el metodo Index de acá 
             }
 
             reserva.FechaCheckIn = fechaCheckIn;
@@ -175,11 +192,12 @@ namespace HotelEstrellaDeMar.Controllers
 
             _context.SaveChanges();
 
+            ViewBag.IdUsuario = idUsuario;
             ViewBag.Reserva = reserva;
-            return View("ReservaCreadaOModificadaExitosa");
+            return View("ReservaCreadaOModificadaExitosa"/*, new { id = idUsuario }*/);
         }
 
-        public IActionResult EliminarReserva(int id)
+        public IActionResult EliminarReserva(int id, int idUsuario)
         {
             Console.WriteLine("id Reserva: " + id);
             Reserva reserva = _context.Reservas
@@ -200,7 +218,7 @@ namespace HotelEstrellaDeMar.Controllers
                 _context.SaveChanges();
             }
 
-            
+            ViewBag.idUsuario = idUsuario;
             return View("BorradoExitoso");
         }
     }

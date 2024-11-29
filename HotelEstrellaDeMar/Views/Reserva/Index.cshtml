@@ -8,9 +8,9 @@
     <div class="container">
         <h1 class="mb-4">Reservas</h1>
 
-        <a asp-controller="Reserva" asp-action="Create" class="btn btn-primary">Crear Reserva</a>
+        <a asp-controller="Reserva" asp-action="Create" asp-route-id="@ViewBag.IdUsuario" class="btn btn-primary">Crear Reserva</a>
     </div>
-
+    <input type="hidden" id="userId" name="id" value="@ViewBag.IdUsuario" />
     @if (ViewBag.Reservas != null && ViewBag.Reservas.Count > 0)
     {
         <div class="container mt-5">
@@ -40,10 +40,10 @@
                             <td>@reserva.FechaCheckIn</td>
                             <td>@reserva.FechaCheckOut</td>                    
                             <td>
-                                <a asp-action="Edit" asp-route-id="@reserva.IDReserva" class="btn btn-primary" title="Edit">
+                                <a asp-action="Edit" asp-route-id="@reserva.IDReserva" asp-route-idUsuario="@ViewBag.IdUsuario" class="btn btn-primary" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a asp-action="EliminarReserva" asp-route-id="@reserva.IDReserva" class="btn btn-danger" title="Delete"
+                                <a asp-action="EliminarReserva" asp-route-id="@reserva.IDReserva" asp-route-idUsuario="@ViewBag.idUsuario"  class="btn btn-danger" title="Delete"
                                    onclick="return confirm('¿Estás seguro de que deseas borrar esta reserva?');">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>                                

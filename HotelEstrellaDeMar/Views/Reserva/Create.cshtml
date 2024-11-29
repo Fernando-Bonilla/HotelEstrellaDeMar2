@@ -1,7 +1,7 @@
 ﻿<div class="container mt-5">
     <h2 class="mb-4">Crear Reserva</h2>
 
-    <form asp-action="CrearReserva" method="post">
+    <form asp-action="CrearReserva" method="post">        
         <div class="mb-3">
             <label for="fechaCheckIn" class="form-label">Ingrese una fecha de CheckIn</label>
             <input type="date" class="form-control" name="fechaCheckIn" id="fechaCheckIn" required min="@ViewBag.Hoy"/>
@@ -23,19 +23,22 @@
         </div>
 
         <div class="mb-3">
-            <label for="idUsuario" class="form-label">Seleccione el Usuario</label>
+            <input type="hidden" id="userId" name="idUsuario" value="@ViewBag.IdUsuario" />
+            <p>idUsuario: @ViewBag.IdUsuario</p>
+
+            @* <label for="idUsuario" class="form-label">Seleccione el Usuario</label>
             <select class="form-select" name="idUsuario" id="idUsuario" required>
                 <option value="">--Por favor seleccione un usuario--</option>
                 @foreach(var user in ViewBag.Usuarios)
                 {
                     <option value="@user.Id">@user.Nombre @user.Apellido </option>
                 }
-            </select>
+            </select> *@
         </div>
 
         <div class="mb-3">
             <input type="submit" class="btn btn-primary" value="Crear Reserva">
-            <a asp-action="Index" class="btn btn-outline-secondary" title="Regresar al listado">
+            <a asp-action="Index" class="btn btn-outline-secondary" asp-route-idUsuario="@ViewBag.IdUsuario" title="Regresar al listado">
                 <i class="fas fa-arrow-left"></i> Regresar al Listado
             </a>
         </div>
