@@ -42,6 +42,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="" asp-route-id="@ViewBag.IdUsuario">Id @ViewBag.IdUsuario</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark btn btn-outline-danger" asp-area="" asp-controller="Login" asp-action="Index" title="Cerrar sesión">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
