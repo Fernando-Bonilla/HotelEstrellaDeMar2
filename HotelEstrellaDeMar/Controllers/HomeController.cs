@@ -16,14 +16,15 @@ namespace HotelEstrellaDeMar.Controllers
 
         public IActionResult Index(int id)
         {
+            
             ViewBag.IdUsuario = id; // Pasar el ID del usuario al ViewBag
             return View();
         }
 
         //Metodo para agregar datos a la base de datos para tener para testear
-        /*public IActionResult PreCargaDatos(string? force) 
+        /*public IActionResult PreCargaDatos() 
         {
-            if((_context.Reservas.Count() == 0 || _context.Usuarios.Count() == 0 || _context.Habitaciones.Count() == 0) || force == "true")
+            if((_context.Reservas.Count() == 0 || _context.Usuarios.Count() == 0 || _context.Habitaciones.Count() == 0))
             {
                 _context.Habitaciones.Add(new Habitacion(101, "Simple", 2));
                 _context.Habitaciones.Add(new Habitacion(102, "Simple", 2));

@@ -27,7 +27,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// Precarga de datos directamente en el archivo Program.cs
+// Precarga de datos directamente en Program
 using (var scope = app.Services.CreateScope())
 {
     var _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
