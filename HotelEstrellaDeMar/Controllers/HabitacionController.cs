@@ -24,7 +24,7 @@ namespace HotelEstrellaDeMar.Controllers
         }
 
         [HttpPost]
-        public IActionResult MostrarHabDisponibles(DateTime fechaCheckIn, DateTime fechaCheckOut, string tipoHab)
+        public IActionResult MostrarHabDisponibles(DateTime fechaCheckIn, DateTime fechaCheckOut, string tipoHab,int IdUsuario)
         {
             List<Habitacion> HabitacionesDisponibles = new List<Habitacion>();
             List<Habitacion> HabitacionesPorTipo;
@@ -74,7 +74,7 @@ namespace HotelEstrellaDeMar.Controllers
             }
 
             /*ViewBag.HabitacionesDisponibles = HabitacionesDisponibles;*/
-            
+            ViewBag.IdUsuario = IdUsuario;
             return View("Index");
 
         }

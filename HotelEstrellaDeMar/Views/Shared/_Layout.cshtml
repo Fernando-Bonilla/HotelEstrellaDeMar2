@@ -38,11 +38,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Estadistica" asp-action="Index" asp-route-id="@ViewBag.IdUsuario">Estadisticas</a>
                         </li>
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="" asp-route-id="@ViewBag.IdUsuario">Id @ViewBag.IdUsuario</a>
-                        </li>
+                        </li> *@
                     </ul>
                     <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">                            
+                            <span class="nav-link text-dark">Bienvenido, @ViewBag.IdUsuario</span>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark btn btn-outline-danger" asp-area="" asp-controller="Login" asp-action="Index" title="Cerrar sesión">
                                 <i class="fas fa-sign-out-alt"></i> Logout
