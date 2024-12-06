@@ -1,6 +1,6 @@
 ﻿<div class="container mt-5">
     <h2 class="mb-4">Editar Reserva</h2>
-    <form asp-action="EditarReserva" @* asp-route-id="@ViewBag.IdUsuario" *@ method="post">
+    <form asp-action="EditarReserva" method="post">
         <input type="hidden" name="idReserva" value="@ViewBag.Reserva.IDReserva" />
         <input type="hidden" name="idUsuario" value="@ViewBag.IdUsuario" />
         <div class="mb-3">
